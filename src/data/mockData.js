@@ -72,6 +72,32 @@ export const projects = [
     },
     liveLink: "#",
     githubLink: "#"
+  },
+  {
+    id: 4,
+    title: "Porralia - Betting App",
+    subtitle: "Social Pools & Sports Prediction Platform",
+    description:
+      "Built a cross-platform React Native social pools and prediction app where users create contests around sports and TV events, make picks together, and compete using a virtual points system instead of real money.",
+    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771238378/ChatGPT_Image_Feb_16_2026_03_57_52_PM_a2rak7.png", // You can replace with real app image
+    techStack: [
+      "React Native",
+      "Expo",
+      "Redux Toolkit",
+      "React Query",
+      "REST APIs",
+      "JWT Authentication"
+    ],
+    highlights: [
+      "Designed guided 5-step pool creation flow with validation and structured API payloads",
+      "Implemented monthly 100 virtual points allocation system with balance tracking",
+      "Built flexible reward distribution: Points Split & Podium (1st/2nd/3rd) modes",
+      "Season-long rankings with leaderboard & recurring competitive challenges"
+    ],
+    metrics: {
+      gamification: "100 monthly virtual points per user",
+      flexibility: "Multiple reward distribution modes"
+    },
   }
 ];
 

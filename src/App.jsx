@@ -15,14 +15,14 @@ import { Toaster } from "./components/ui/sonner";
 
 const Home = () => {
   return (
-    <div className="bg-[#1a1c1b]">
+    <div className="bg-transparent">
       <Header />
       <HeroSection />
       <AboutSection />
       <ProjectsSection />
       <SkillsSection />
       <ExperienceSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <ContactSection />
       <Footer />
       <Toaster />

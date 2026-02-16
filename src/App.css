@@ -3,9 +3,14 @@
     scroll-behavior: smooth;
 }
 
+/* Update this in your CSS file */
 body {
-    background-color: #1a1c1b;
+    background-color: #120a05; /* Matches Hero exactly */
     overflow-x: hidden;
+}
+
+::-webkit-scrollbar-track {
+    background: #120a05;
 }
 
 /* Smooth scrolling offset for fixed header */
@@ -126,7 +131,7 @@ button:focus:not(:focus-visible) {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #3f4816;
+    background: #ff4d00;
     border-radius: 5px;
 }
 

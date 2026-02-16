@@ -1,120 +1,105 @@
 import React from 'react';
-import { ExternalLink, Github, Zap } from 'lucide-react';
+import { Github, Zap, ArrowUpRight } from 'lucide-react';
 import { projects } from '../data/mockData';
-import { Badge } from './ui/badge';
 
 const ProjectsSection = () => {
   return (
-    <section id="projects" className="bg-[#1a1c1b] py-24 px-8">
-      <div className="max-w-[87.5rem] mx-auto">
+    <section id="projects" className="relative z-10 bg-transparent py-32 px-8">
+      <div className="max-w-[75rem] mx-auto"> {/* Tightened container for better focus */}
+        
         {/* Section Label */}
-        <div className="mb-6">
-          <span className="text-[#888680] uppercase text-sm tracking-widest font-medium">
-            Featured Work
+        <div className="flex items-center gap-4 mb-6">
+          <div className="h-[2px] w-12 bg-[#ff4d00]"></div>
+          <span className="text-[#ff9d6e] uppercase text-xs tracking-[0.5em] font-black">
+            Archive / 2024
           </span>
         </div>
 
         {/* Section Title */}
-        <h2 className="font-black text-[clamp(3rem,6vw,5rem)] leading-[0.85] text-[#d9fb06] uppercase mb-16">
-          Projects
+        <h2 className="font-black text-[clamp(3rem,7vw,5.5rem)] leading-[0.8] text-white uppercase mb-24 italic tracking-tighter">
+          Featured<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d00] via-[#ffaa00] to-[#ff4d00] animate-gradient-x">
+            Deployments
+          </span>
         </h2>
 
-        {/* Projects Grid */}
-        <div className="space-y-12">
+        {/* Projects List */}
+        <div className="flex flex-col gap-20"> {/* Using Flex Column for perfect alignment */}
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className={`grid md:grid-cols-2 gap-8 items-stretch ${index % 2 === 1 ? 'md:grid-flow-dense' : ''
-                }`}
+              className={`flex flex-col ${
+                index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'
+              } gap-12 items-center group`}
             >
-              {/* Project Image */}
-              <div
-                className={`relative h-[800px] overflow-hidden group ${index % 2 === 1 ? "md:col-start-2" : ""
-                  }`}
-              >
+              {/* Project Image Box (Edgy & Sharp) */}
+              <div className="relative w-full md:w-1/2 overflow-hidden border border-white/10 clip-path-edgy bg-[#1a1a1a]">
+                {/* Shiny Shimmer Overlay */}
+                <div className="absolute inset-0 z-30 pointer-events-none bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
+                
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="absolute inset-0 w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-110"
+                  className="w-full aspect-[4/3] object-stretch grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                 />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1c1b] via-transparent to-transparent opacity-60" />
+                
+                <div className="absolute inset-0 bg-[#120a05]/20 group-hover:bg-transparent transition-colors duration-500" />
               </div>
 
-              {/* Project Details */}
-              <div
-                className={`bg-[#302f2c] p-8 flex flex-col justify-between border border-[rgba(63,72,22,0.5)] hover:border-[#3f4816] transition-colors ${index % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''
-                  }`}
-              >
-                <div>
-                  {/* Project Title */}
-                  <h3 className="text-[#d9fb06] font-black text-2xl md:text-3xl uppercase mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-[#888680] text-sm uppercase tracking-wide mb-6">
+              {/* Project Details (Perfectly Aligned Card) */}
+              <div className="w-full md:w-1/2">
+                <div className="relative bg-[#1a1a1a]/80 backdrop-blur-2xl p-10 border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-[#ff4d00]/50">
+                  
+                  {/* Edgy Corner Accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[#ff4d00]/10 to-transparent" />
+
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-white font-black text-3xl md:text-4xl uppercase tracking-tighter leading-none">
+                      {project.title}
+                    </h3>
+                    <span className="text-[#ff4d00] font-mono text-sm">0{index + 1}</span>
+                  </div>
+
+                  <p className="text-[#ff9d6e] text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
                     {project.subtitle}
                   </p>
 
-                  {/* Description */}
-                  <p className="text-[#d9fb06] text-base mb-6 leading-relaxed">
+                  <p className="text-gray-400 text-sm leading-relaxed mb-8">
                     {project.description}
                   </p>
 
-                  {/* Key Highlights */}
-                  <div className="mb-6">
-                    <h4 className="text-[#d9fb06] font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                      <Zap size={16} /> Key Features
-                    </h4>
-                    <ul className="space-y-2">
-                      {project.highlights.map((highlight, idx) => (
-                        <li key={idx} className="text-[#888680] text-sm flex items-start gap-2">
-                          <span className="text-[#d9fb06] mt-1">•</span>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Performance Metrics */}
-                  <div className="bg-[#1a1c1b] p-4 rounded mb-6">
-                    {Object.entries(project.metrics).map(([key, value]) => (
-                      <div key={key} className="mb-2 last:mb-0">
-                        <span className="text-[#d9fb06] font-bold text-lg">{value}</span>
-                        <span className="text-[#888680] text-xs uppercase ml-2">({key})</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  {/* Tech Grid */}
+                  <div className="flex flex-wrap gap-2 mb-10">
                     {project.techStack.map((tech, idx) => (
-                      <Badge
-                        key={idx}
-                        variant="outline"
-                        className="border-[#3f4816] text-[#d9fb06] bg-transparent hover:bg-[#3f4816] text-xs"
-                      >
+                      <span key={idx} className="text-[9px] text-white/50 border border-white/10 px-2 py-1 bg-white/5 uppercase tracking-widest font-bold">
                         {tech}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
-                </div>
 
-                {/* Links */}
-                <div className="flex gap-4">
-                  <a
-                    href={project.liveLink}
-                    className="flex-1 bg-[#d9fb06] text-[#1a1c1b] px-6 py-3 rounded-full font-bold text-sm uppercase hover:scale-105 active:scale-95 transition-transform flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink size={16} />
-                    Live Demo
-                  </a>
-                  <a
-                    href={project.githubLink}
-                    className="border border-[#d9fb06] text-[#d9fb06] px-6 py-3 rounded-full font-bold text-sm uppercase hover:bg-[#d9fb06] hover:text-[#1a1c1b] transition-all flex items-center justify-center gap-2"
-                  >
-                    <Github size={16} />
-                    Code
-                  </a>
+                  {/* Shiny Actions */}
+                  <div className="flex gap-6 items-center">
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/btn relative overflow-hidden bg-white text-black px-8 py-4 font-black text-[10px] uppercase tracking-widest transition-all"
+                    >
+                      <span className="relative z-10 flex items-center gap-2">
+                        Execute Demo <ArrowUpRight size={14} />
+                      </span>
+                      <div className="absolute inset-0 bg-[#ff4d00] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
+                    </a>
+                    
+                    <a 
+                      href={project.githubLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-white/40 hover:text-[#ff4d00] transition-colors"
+                    >
+                      <Github size={22} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

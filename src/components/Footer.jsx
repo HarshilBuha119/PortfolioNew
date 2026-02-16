@@ -1,98 +1,111 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Phone, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, Heart, ArrowUp } from 'lucide-react';
 import { personalInfo } from '../data/mockData';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-[#0f0f10] border-t border-[#3f4816] py-12 px-8">
+    <footer className="relative z-10 bg-[#0a0a0a] border-t border-white/10 py-20 px-8">
       <div className="max-w-[87.5rem] mx-auto">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <div className="text-[#d9fb06] font-black text-2xl mb-4">HB</div>
-            <p className="text-[#888680] text-sm leading-relaxed">
-              Building high-performance mobile experiences with React Native and modern web technologies.
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
+          
+          {/* Brand & Mission */}
+          <div className="md:col-span-2">
+            <button 
+              onClick={scrollToTop}
+              className="text-white font-black text-3xl mb-6 tracking-tighter hover:text-[#ff4d00] transition-colors group flex items-center gap-2"
+            >
+              HB <span className="text-[#ff4d00] group-hover:animate-pulse">_</span>
+            </button>
+            <p className="text-gray-500 text-sm leading-relaxed max-w-sm uppercase tracking-wider font-medium">
+              Architecting high-performance mobile deployments and digital ecosystems with a focus on speed, scale, and precision.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* System Navigation */}
           <div>
-            <h3 className="text-[#d9fb06] font-bold text-sm uppercase mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#about" className="text-[#888680] hover:text-[#d9fb06] transition-colors text-sm">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#projects" className="text-[#888680] hover:text-[#d9fb06] transition-colors text-sm">
-                  Projects
-                </a>
-              </li>
-              <li>
-                <a href="#skills" className="text-[#888680] hover:text-[#d9fb06] transition-colors text-sm">
-                  Skills
-                </a>
-              </li>
-              <li>
-                <a href="#experience" className="text-[#888680] hover:text-[#d9fb06] transition-colors text-sm">
-                  Experience
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-[#888680] hover:text-[#d9fb06] transition-colors text-sm">
-                  Contact
-                </a>
-              </li>
+            <h3 className="text-white font-black text-[10px] uppercase tracking-[0.3em] mb-8 text-[#ff4d00]">
+              System Map
+            </h3>
+            <ul className="space-y-4">
+              {['about', 'projects', 'skills', 'experience', 'contact'].map((item) => (
+                <li key={item}>
+                  <a 
+                    href={`#${item}`} 
+                    className="text-gray-500 hover:text-white transition-colors text-xs uppercase font-bold tracking-widest flex items-center gap-2 group"
+                  >
+                    <span className="w-0 h-[1px] bg-[#ff4d00] group-hover:w-4 transition-all"></span>
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Connect */}
+          {/* Social Uplinks */}
           <div>
-            <h3 className="text-[#d9fb06] font-bold text-sm uppercase mb-4">Connect</h3>
-            <div className="flex gap-4 mb-4">
+            <h3 className="text-white font-black text-[10px] uppercase tracking-[0.3em] mb-8 text-[#ff4d00]">
+              Social Uplinks
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
               <a
                 href={personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#302f2c] p-3 rounded-lg text-[#888680] hover:text-[#d9fb06] hover:bg-[#3f4816] transition-all"
+                className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-xs font-bold"
               >
-                <Github size={20} />
+                <Github size={16} className="text-[#ff4d00]" /> GITHUB
               </a>
               <a
                 href={personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#302f2c] p-3 rounded-lg text-[#888680] hover:text-[#d9fb06] hover:bg-[#3f4816] transition-all"
+                className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-xs font-bold"
               >
-                <Linkedin size={20} />
+                <Linkedin size={16} className="text-[#ff4d00]" /> LINKEDIN
               </a>
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="bg-[#302f2c] p-3 rounded-lg text-[#888680] hover:text-[#d9fb06] hover:bg-[#3f4816] transition-all"
+                className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-xs font-bold"
               >
-                <Mail size={20} />
+                <Mail size={16} className="text-[#ff4d00]" /> EMAIL
               </a>
               <a
                 href={`tel:${personalInfo.phone}`}
-                className="bg-[#302f2c] p-3 rounded-lg text-[#888680] hover:text-[#d9fb06] hover:bg-[#3f4816] transition-all"
+                className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-xs font-bold"
               >
-                <Phone size={20} />
+                <Phone size={16} className="text-[#ff4d00]" /> SIGNAL
               </a>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-[#3f4816] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[#888680] text-sm">
-            © {currentYear} Harshil Buha. All rights reserved.
-          </p>
-          <p className="text-[#888680] text-sm flex items-center gap-2">
-            Built with <Heart size={16} className="text-[#d9fb06] fill-[#d9fb06]" /> using React & FastAPI
-          </p>
+        {/* Bottom Status Bar */}
+        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-6">
+            <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest">
+              © {currentYear} Harshil Buha / Terminal_v1.0
+            </p>
+          </div>
+          
+          <div className="flex items-center gap-8">
+            <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+              Built with <Heart size={12} className="text-[#ff4d00] fill-[#ff4d00]" /> 
+              via <span className="text-white">React & FastAPI</span>
+            </p>
+            
+            <button 
+              onClick={scrollToTop}
+              className="p-3 border border-white/10 hover:border-[#ff4d00] hover:text-[#ff4d00] transition-all group"
+            >
+              <ArrowUp size={16} className="group-hover:-translate-y-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>

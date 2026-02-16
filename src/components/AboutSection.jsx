@@ -22,66 +22,76 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="bg-[#1a1c1b] py-24 px-8">
+    <section id="about" className="relative z-10 py-24 px-8 bg-transparent">
       <div className="max-w-[87.5rem] mx-auto">
+        
         {/* Section Label */}
         <div className="mb-6">
-          <span className="text-[#888680] uppercase text-sm tracking-widest font-medium">
+          <span className="text-[#ff9d6e] uppercase text-xs tracking-[0.4em] font-bold px-3 py-1 bg-[#ff4d00]/10 border-l-2 border-[#ff4d00]">
             About Me
           </span>
         </div>
 
         {/* Section Title */}
-        <h2 className="font-black text-[clamp(3rem,6vw,5rem)] leading-[0.85] text-[#d9fb06] uppercase mb-12">
+        <h2 className="font-black text-[clamp(3rem,6vw,5rem)] leading-[0.85] text-white uppercase mb-16">
           Building The
           <br />
-          Future of
-          <br />
-          Mobile
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d00] to-[#ffaa00]">
+            Future of Mobile
+          </span>
         </h2>
 
         {/* About Content */}
-        <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
-          <div>
-            <p className="text-[#d9fb06] text-lg md:text-xl font-medium mb-6 leading-relaxed">
+        <div className="grid md:grid-cols-2 gap-16 items-start mb-20">
+          <div className="space-y-6">
+            <p className="text-[#ff9d6e] text-xl md:text-2xl font-semibold leading-relaxed">
               {personalInfo.about}
             </p>
-            <p className="text-[#888680] text-base leading-relaxed">
-              Currently working at DotPitch Technologies, I specialize in creating high-performance mobile applications that solve real-world problems. My expertise spans from building secure authentication systems to implementing real-time features that handle thousands of concurrent operations.
+            <p className="text-gray-400 text-lg leading-relaxed border-l border-white/10 pl-6">
+              Currently working at <span className="text-white font-bold">DotPitch Technologies</span>. I specialize in high-performance mobile apps and real-time features.
             </p>
           </div>
 
-          <div className="bg-[#302f2c] p-8 rounded-lg">
-            <h3 className="text-[#d9fb06] font-bold text-xl mb-4 uppercase">Quick Stats</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="text-[#d9fb06] text-3xl font-black">65%</div>
-                <div className="text-[#888680] text-sm">API Latency Reduction</div>
-              </div>
-              <div className="h-px bg-[#3f4816]"></div>
-              <div>
-                <div className="text-[#d9fb06] text-3xl font-black">60%</div>
-                <div className="text-[#888680] text-sm">Bug Reduction with Redux Toolkit</div>
-              </div>
-              <div className="h-px bg-[#3f4816]"></div>
-              <div>
-                <div className="text-[#d9fb06] text-3xl font-black">1K+</div>
-                <div className="text-[#888680] text-sm">Updates/Second Processed</div>
-              </div>
+          {/* Quick Stats - Styled EXACTLY like Hero Stats */}
+          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-10 group hover:border-[#ff4d00]/40 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,77,0,0.15)]">
+            <h3 className="text-white font-black text-xl mb-8 uppercase tracking-widest border-b border-[#ff4d00]/20 pb-2">
+              System Metrics
+            </h3>
+            <div className="space-y-8">
+              {[
+                { val: "65%", label: "API Latency Reduction" },
+                { val: "60%", label: "Bug Reduction with Redux" },
+                { val: "1K+", label: "Updates/Second" }
+              ].map((stat, i) => (
+                <div key={i} className="group/item">
+                  <div className="text-[#ff4d00] text-4xl font-black group-hover/item:scale-105 transition-transform origin-left group-hover/item:drop-shadow-[0_0_10px_rgba(255,77,0,0.5)]">
+                    {stat.val}
+                  </div>
+                  <div className="text-gray-500 text-[10px] uppercase tracking-widest mt-1 font-bold">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Highlights */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Highlights Cards - Styled EXACTLY like Hero Stats */}
+        <div className="grid md:grid-cols-3 gap-6">
           {highlights.map((item, index) => (
             <div
               key={index}
-              className="bg-[#302f2c] p-8 hover:bg-[#3f4816] transition-colors border border-[rgba(63,72,22,0.5)]"
+              className="bg-white/[0.03] backdrop-blur-xl p-10 border border-white/10 transition-all duration-500 group hover:bg-[#ff4d00]/5 hover:border-[#ff4d00]/60 hover:-translate-y-3 hover:shadow-[0_20px_40px_rgba(255,77,0,0.25)]"
             >
-              <div className="text-[#d9fb06] mb-4">{item.icon}</div>
-              <h3 className="text-[#d9fb06] font-bold text-lg mb-3 uppercase">{item.title}</h3>
-              <p className="text-[#888680] text-sm leading-relaxed">{item.description}</p>
+              <div className="text-[#ff4d00] mb-6 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,77,0,0.6)] transition-all duration-300">
+                {item.icon}
+              </div>
+              <h3 className="text-white font-black text-lg mb-4 uppercase tracking-tighter">
+                {item.title}
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">
+                {item.description}
+              </p>
             </div>
           ))}
         </div>

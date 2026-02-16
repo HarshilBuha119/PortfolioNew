@@ -1,238 +1,154 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, useRef, useState, useEffect } from 'react';
+import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
+import { Points, Float, MeshDistortMaterial, PointMaterial } from '@react-three/drei';
+import * as THREE from 'three';
 import { Github, Linkedin, Mail, Phone, Code2, Zap, Rocket } from 'lucide-react';
 import { personalInfo } from '../data/mockData';
 
-const HeroSection = () => {
-  const canvasRef = useRef(null);
+extend({ PointMaterial });
+
+const SceneContent = ({ isHovered }) => {
+  const groupRef = useRef();
+  const { viewport } = useThree();
+  const [scrollPos, setScrollPos] = useState(0);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = Math.min(window.innerHeight * 0.9, 650);
-
-    // Particle system for animated background
-    const particles = [];
-    const particleCount = 50;
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.opacity = Math.random() * 0.5 + 0.2;
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-      }
-
-      draw() {
-        ctx.fillStyle = `rgba(217, 251, 6, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // Initialize particles
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-
-    // Animation loop
-    function animate() {
-      ctx.fillStyle = 'rgba(26, 28, 27, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
-
-      // Draw connections
-      particles.forEach((a, i) => {
-        particles.slice(i + 1).forEach((b) => {
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 150) {
-            ctx.strokeStyle = `rgba(217, 251, 6, ${0.15 * (1 - distance / 150)})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        });
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    // Handle resize
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = Math.min(window.innerHeight * 0.9, 650);
+    const handleScroll = () => {
+      const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      setScrollPos(scrolled);
     };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToProjects = () => {
-    const element = document.getElementById('projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  useFrame((state) => {
+    const mouseX = (state.mouse.x * viewport.width) / 10;
+    const mouseY = (state.mouse.y * viewport.height) / 10;
+    
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -mouseY + (scrollPos * 2), 0.05);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, mouseX + (scrollPos * 5), 0.05);
+
+    const scale = isHovered ? 1.15 + Math.sin(state.clock.elapsedTime * 6) * 0.02 : 1;
+    groupRef.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.1);
+  });
 
   return (
-    <section id="hero" className="relative bg-[#1a1c1b] overflow-hidden min-h-screen flex items-center">
-      {/* Animated Canvas Background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-      />
+    <group ref={groupRef}>
+      <mesh>
+        <icosahedronGeometry args={[5, 2]} />
+        <meshBasicMaterial color="#ff4d00" wireframe transparent opacity={0.5} />
+      </mesh>
+      <Points>
+        <sphereGeometry args={[2, 48, 48]} />
+        <pointsMaterial
+          transparent
+          color="#ffaa00"
+          size={0.05}
+          sizeAttenuation={true}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </Points>
+      {/* <Float speed={5} rotationIntensity={10} floatIntensity={0.5}>
+        <mesh>
+          <sphereGeometry args={[0.8, 64, 64]} />
+          <MeshDistortMaterial
+            color={isHovered ? "#ffffff" : "#ff6b00"}
+            speed={isHovered ? 4 : 2}
+            distort={0.5}
+            radius={1}
+            metalness={0.9}
+            roughness={0.1}
+          />
+        </mesh>
+      </Float> */}
+    </group>
+  );
+};
 
-      {/* Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-[10%] w-64 h-64 border-2 border-[#3f4816] opacity-20 rotate-45 animate-spin-slow"></div>
-        <div className="absolute bottom-20 left-[15%] w-48 h-48 border-2 border-[#d9fb06] opacity-10 animate-pulse"></div>
+const HeroSection = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <section id="hero" className="relative min-h-screen flex items-center bg-[#120a05] transition-colors duration-500">
+      {/* 3D Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+          <ambientLight intensity={0.2} />
+          <pointLight position={[10, 10, 10]} intensity={2} color="#ff4d00" />
+          <pointLight position={[-10, -10, 10]} intensity={1} color="#ffaa00" />
+          <Suspense fallback={null}>
+            <SceneContent isHovered={isHovered} />
+          </Suspense>
+        </Canvas>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-[87.5rem] mx-auto px-8 py-16 md:py-20 w-full">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Column - Text Content */}
-          <div className="space-y-6 md:space-y-8 animate-fadeInUp">
-            {/* Small Label */}
-            <div className="inline-block">
-              <span className="text-[#888680] uppercase text-xs tracking-[0.2em] font-bold px-4 py-2 bg-[#302f2c] border border-[#3f4816]">
+      <div className="relative z-10 max-w-[87.5rem] mx-auto px-8 py-16 w-full">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Column */}
+          <div className="space-y-8">
+            <div className="inline-block group cursor-default">
+              <span className="text-[#ff9d6e] uppercase text-xs tracking-[0.2em] font-bold px-4 py-2 bg-[#ff4d00]/10 border border-[#ff4d00]/30 backdrop-blur-md transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(255,77,0,0.4)] group-hover:border-[#ff4d00]">
                 Full-Stack Mobile Developer
               </span>
             </div>
 
-            {/* Main Heading with Gradient Effect */}
-            <div>
-              <h1 className="font-black text-[clamp(3rem,6vw,6rem)] leading-[0.9] text-[#d9fb06] uppercase mb-3 tracking-tight animate-slideInLeft">
-                {personalInfo.name.split(' ')[0]}
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d9fb06] to-[#888680]">
+            <div className="group cursor-default">
+              <h1 className="font-black text-[clamp(3rem,6vw,6rem)] leading-[0.9] text-white uppercase tracking-tight transition-all duration-500 group-hover:drop-shadow-[0_0_30px_rgba(255,77,0,0.3)]">
+                {personalInfo.name.split(' ')[0]}<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d00] to-[#ffaa00]">
                   {personalInfo.name.split(' ')[1]}
                 </span>
               </h1>
-              
-              {/* Animated Underline */}
-              <div className="h-1 w-24 bg-gradient-to-r from-[#d9fb06] to-transparent animate-slideInLeft"></div>
             </div>
 
-            {/* Tagline */}
-            <p className="text-[#d9fb06] text-lg md:text-xl font-semibold leading-tight max-w-[25ch] animate-fadeIn">
+            <p className="text-[#ff9d6e] text-xl font-semibold border-l-2 border-[#ff4d00] pl-4 transition-all hover:shadow-[0_0_15px_rgba(255,77,0,0.2)]">
               {personalInfo.tagline}
             </p>
 
-            {/* Description */}
-            <p className="text-[#888680] text-sm md:text-base leading-relaxed max-w-[50ch] animate-fadeIn">
-              Specialized in performance optimization, real-time systems, and creating seamless mobile experiences. Proven track record of reducing API latency by <span className="text-[#d9fb06] font-bold">65%</span>.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-3 md:gap-4 animate-fadeInUp">
-              <button
-                onClick={scrollToProjects}
-                className="group bg-[#d9fb06] text-[#1a1c1b] px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-sm uppercase hover:shadow-[0_0_20px_rgba(217,251,6,0.5)] transition-all duration-300 flex items-center gap-2"
+            <div className="flex gap-4">
+              <button 
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="bg-gradient-to-r from-[#ff4d00] to-[#ffaa00] text-white font-black px-10 py-5 rounded-sm transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,77,0,0.6)] active:scale-95"
               >
-                <Rocket size={18} className="group-hover:translate-x-1 transition-transform" />
-                View Projects
+                VIEW PROJECTS
               </button>
-              <a
-                href={`mailto:${personalInfo.email}`}
-                className="border-2 border-[#d9fb06] text-[#d9fb06] px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-sm uppercase hover:bg-[#d9fb06] hover:text-[#1a1c1b] transition-all duration-300"
-              >
-                Get in Touch
-              </a>
             </div>
 
-            {/* Social Links */}
-            <div className="flex gap-3 md:gap-4 pt-2 animate-fadeInUp">
-              {[
-                { Icon: Github, href: personalInfo.github, label: 'GitHub' },
-                { Icon: Linkedin, href: personalInfo.linkedin, label: 'LinkedIn' },
-                { Icon: Mail, href: `mailto:${personalInfo.email}`, label: 'Email' },
-                { Icon: Phone, href: `tel:${personalInfo.phone}`, label: 'Phone' }
-              ].map(({ Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={label === 'GitHub' || label === 'LinkedIn' ? '_blank' : undefined}
-                  rel={label === 'GitHub' || label === 'LinkedIn' ? 'noopener noreferrer' : undefined}
-                  className="group bg-[#302f2c] p-3 md:p-4 rounded-lg border border-[#3f4816] text-[#888680] hover:text-[#d9fb06] hover:border-[#d9fb06] hover:shadow-[0_0_15px_rgba(217,251,6,0.2)] transition-all duration-300"
-                  aria-label={label}
-                >
-                  <Icon size={20} className="group-hover:scale-110 transition-transform" />
-                </a>
-              ))}
+            {/* Social Icons with Glow */}
+            <div className="flex gap-5">
+               {[Github, Linkedin, Mail, Phone].map((Icon, i) => (
+                 <div key={i} className="group p-2 rounded-full transition-all duration-300 hover:bg-[#ff4d00]/10 hover:shadow-[0_0_20px_rgba(255,77,0,0.3)]">
+                   <Icon className="text-gray-500 group-hover:text-[#ff4d00] cursor-pointer transition-colors" size={24} />
+                 </div>
+               ))}
             </div>
           </div>
 
-          {/* Right Column - Stats & Highlights */}
-          <div className="space-y-4 md:space-y-6 animate-fadeInRight">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-              {[
-                { icon: <Zap size={28} />, stat: '65%', label: 'API Latency Cut' },
-                { icon: <Code2 size={28} />, stat: '3+', label: 'Major Projects' },
-                { icon: <Rocket size={28} />, stat: '1K+', label: 'Updates/Second' },
-                { icon: <Github size={28} />, stat: '2+', label: 'Years Experience' }
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-[#302f2c] border border-[#3f4816] p-4 md:p-6 rounded-lg hover:border-[#d9fb06] hover:shadow-[0_0_20px_rgba(217,251,6,0.15)] transition-all duration-300 group"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="text-[#d9fb06] mb-2 md:mb-3 group-hover:scale-110 transition-transform">
-                    {item.icon}
-                  </div>
-                  <div className="text-[#d9fb06] text-2xl md:text-3xl font-black mb-1">{item.stat}</div>
-                  <div className="text-[#888680] text-xs uppercase tracking-wide">{item.label}</div>
+          {/* Right Column - Stats with Heavy Glow */}
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { label: 'Latency Cut', val: '65%', icon: <Zap /> },
+              { label: 'Major Projects', val: '3+', icon: <Code2 /> },
+              { label: 'Updates/Sec', val: '1.2k', icon: <Rocket /> },
+              { label: 'Experience', val: '1+', icon: <Github /> }
+            ].map((s, i) => (
+              <div 
+                key={i} 
+                className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 transition-all duration-500 group hover:bg-[#ff4d00]/5 hover:border-[#ff4d00]/60 hover:shadow-[0_0_35px_rgba(255,77,0,0.25)] hover:-translate-y-2"
+              >
+                <div className="text-[#ff4d00] mb-4 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(255,77,0,0.8)] transition-all">
+                  {s.icon}
                 </div>
-              ))}
-            </div>
-
-            {/* Tech Highlights */}
-            <div className="bg-gradient-to-br from-[#302f2c] to-[#1a1c1b] border border-[#3f4816] p-6 md:p-8 rounded-lg">
-              <h3 className="text-[#d9fb06] font-bold text-base md:text-lg uppercase mb-3 md:mb-4">Core Stack</h3>
-              <div className="flex flex-wrap gap-2">
-                {['React Native', 'Node.js', 'Firebase', 'WebSockets', 'Redux', 'MongoDB'].map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 md:px-4 py-1.5 md:py-2 bg-[#1a1c1b] border border-[#3f4816] text-[#d9fb06] text-xs md:text-sm font-medium rounded-full hover:border-[#d9fb06] hover:shadow-[0_0_10px_rgba(217,251,6,0.2)] transition-all duration-300 cursor-default"
-                  >
-                    {tech}
-                  </span>
-                ))}
+                <div className="text-4xl font-black text-white">{s.val}</div>
+                <div className="text-[10px] text-gray-500 uppercase tracking-widest mt-2">{s.label}</div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#1a1c1b] to-transparent pointer-events-none"></div>
     </section>
   );
 };
