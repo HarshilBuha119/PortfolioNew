@@ -38,7 +38,7 @@ export const projects = [
     title: "InvoiceApp",
     subtitle: "High-Performance Invoice Management",
     description: "Developed a full-featured invoice management app with CRUD operations, offline persistence, biometric authentication, and lightning-fast PDF/HTML export capabilities.",
-    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1769675067/ChatGPT_Image_Jan_29_2026_12_01_11_PM_rtnkf2.png",
+    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771403151/Cover_1_ypvna9.png",
     techStack: ["Expo", "React Native", "MMKV", "TanStack Query", "Biometric Auth", "expo-print"],
     highlights: [
       "Sub-second data operations (244ms write, 27ms read)",
@@ -58,7 +58,7 @@ export const projects = [
     title: "Crypto Trading Simulator",
     subtitle: "Real-Time Trading Platform with AI Assistant",
     description: "Developed a full-stack paper trading simulator leveraging Binance WebSocket API for real-time cryptocurrency data across 50+ trading pairs with AI-powered trading insights.",
-    image: "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?w=800",
+    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771416196/Untitled_scttao.png",
     techStack: ["React Native", "WebSocket", "OpenRouter AI", "Chart Kit", "Node.js", "Binance API"],
     highlights: [
       "AI trading assistant with personalized insights",
@@ -79,7 +79,7 @@ export const projects = [
     subtitle: "Social Pools & Sports Prediction Platform",
     description:
       "Built a cross-platform React Native social pools and prediction app where users create contests around sports and TV events, make picks together, and compete using a virtual points system instead of real money.",
-    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771238378/ChatGPT_Image_Feb_16_2026_03_57_52_PM_a2rak7.png", // You can replace with real app image
+    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771336096/Thumbnail_2_up2ude.png", // You can replace with real app image
     techStack: [
       "React Native",
       "Expo",

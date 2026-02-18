@@ -4,21 +4,26 @@ import { experience, education, certifications } from '../data/mockData';
 
 const ExperienceSection = () => {
   return (
-    <section id="experience" className="relative z-10 bg-transparent py-32 px-8">
+    <section id="experience" className="relative z-10 bg-transparent py-10 px-8">
       <div className="max-w-[75rem] mx-auto">
-        
+        <div className="mb-6">
+          <span className="text-[#ff9d6e] uppercase text-xs tracking-[0.4em] font-bold px-3 py-1 bg-[#ff4d00]/10 border-l-2 border-[#ff4d00]">
+            Experience
+          </span>
+        </div>
         {/* Section Label */}
-        <div className="flex items-center gap-4 mb-6">
+        {/* <div className="flex items-center gap-4 mb-6">
           <div className="h-[2px] w-12 bg-[#ff4d00]"></div>
           <span className="text-[#ff9d6e] uppercase text-xs tracking-[0.5em] font-black">
             Career Journey
           </span>
-        </div>
+        </div> */}
 
         {/* Section Title */}
-        <h2 className="font-black text-[clamp(3.5rem,8vw,6rem)] leading-[0.8] text-white uppercase mb-24 italic tracking-tighter">
-          Work<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d00] via-[#ffaa00] to-[#ff4d00] animate-gradient-x">
+        <h2 className="font-black text-[clamp(3.5rem,8vw,6rem)] leading-[0.8] text-white uppercase mb-16 italic tracking-tighter">
+          Work
+          <br />
+          <span className="text-transparent pr-5 bg-clip-text bg-gradient-to-r from-[#ff4d00] via-[#ffaa00] to-[#ff4d00] animate-gradient-x">
             History
           </span>
         </h2>
@@ -44,8 +49,8 @@ const ExperienceSection = () => {
                   </div>
 
                   {/* Content Card */}
-                  <div className="flex-1 bg-white/[0.02] backdrop-blur-2xl p-8 md:p-10 border border-white/10 hover:border-[#ff4d00]/50 transition-all duration-500 relative overflow-hidden">
-                    
+                  <div className="flex-1 bg-white/[0.02] backdrop-blur-2xl p-8 md:p-10 border border-white/10 transition-all duration-500 group hover:bg-[#ff4d00]/5 hover:border-[#ff4d00]/60 hover:shadow-[0_0_35px_rgba(255,77,0,0.25)] hover:-translate-y-2">
+
                     {/* Shiny Top Border Shimmer */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#ff4d00]/50 to-transparent -translate-x-full group-hover:animate-shimmer" />
 
@@ -91,12 +96,12 @@ const ExperienceSection = () => {
         </div>
 
         {/* Education & Certifications Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 ">
           {/* Education Card */}
-          <div className="relative group bg-white/[0.02] backdrop-blur-2xl p-10 border border-white/10 hover:border-[#ff4d00]/30 transition-all">
+          <div className="relative group bg-white/[0.02] backdrop-blur-2xl p-10 border border-white/10 transition-all duration-500 group hover:bg-[#ff4d00]/5 hover:border-[#ff4d00]/60 hover:shadow-[0_0_35px_rgba(255,77,0,0.25)] hover:-translate-y-2">
             <div className="flex items-center gap-3 mb-8">
-                <GraduationCap className="text-[#ff4d00]" size={24} />
-                <h3 className="text-white font-black text-xl uppercase tracking-tighter">Education</h3>
+              <GraduationCap className="text-[#ff4d00]" size={24} />
+              <h3 className="text-white font-black text-xl uppercase tracking-tighter">Education</h3>
             </div>
             <div>
               <div className="text-[#ff9d6e] font-black text-lg uppercase leading-none mb-3 tracking-tighter">{education.degree}</div>
@@ -112,10 +117,10 @@ const ExperienceSection = () => {
           </div>
 
           {/* Certifications Card */}
-          <div className="relative group bg-white/[0.02] backdrop-blur-2xl p-10 border border-white/10 hover:border-[#ff4d00]/30 transition-all">
+          <div className="relative group bg-white/[0.02] backdrop-blur-2xl p-10 border border-white/10 transition-all duration-500 group hover:bg-[#ff4d00]/5 hover:border-[#ff4d00]/60 hover:shadow-[0_0_35px_rgba(255,77,0,0.25)] hover:-translate-y-2">
             <div className="flex items-center gap-3 mb-8">
-                <Award className="text-[#ff4d00]" size={24} />
-                <h3 className="text-white font-black text-xl uppercase tracking-tighter">Certifications</h3>
+              <Award className="text-[#ff4d00]" size={24} />
+              <h3 className="text-white font-black text-xl uppercase tracking-tighter">Certifications</h3>
             </div>
             <ul className="space-y-4">
               {certifications.map((cert, idx) => (

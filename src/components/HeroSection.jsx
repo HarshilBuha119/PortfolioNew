@@ -1,6 +1,6 @@
 import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
-import { Points, Float, MeshDistortMaterial, PointMaterial } from '@react-three/drei';
+import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { Github, Linkedin, Mail, Phone, Code2, Zap, Rocket } from 'lucide-react';
 import { personalInfo } from '../data/mockData';
@@ -11,7 +11,6 @@ const SceneContent = ({ isHovered }) => {
   const groupRef = useRef();
   const { viewport } = useThree();
   const [scrollPos, setScrollPos] = useState(0);
-
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
@@ -24,7 +23,7 @@ const SceneContent = ({ isHovered }) => {
   useFrame((state) => {
     const mouseX = (state.mouse.x * viewport.width) / 10;
     const mouseY = (state.mouse.y * viewport.height) / 10;
-    
+
     groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -mouseY + (scrollPos * 2), 0.05);
     groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, mouseX + (scrollPos * 5), 0.05);
 
@@ -69,8 +68,15 @@ const SceneContent = ({ isHovered }) => {
 const HeroSection = () => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const scrollToProjects = () => {
+    const element = document.getElementById('projects');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section id="hero" className="relative min-h-screen flex items-center bg-[#120a05] transition-colors duration-500">
+    <section id="hero" className="relative min-h-screen flex items-center pt-16 bg-[#120a05] transition-colors duration-500">
       {/* 3D Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
@@ -85,7 +91,7 @@ const HeroSection = () => {
 
       <div className="relative z-10 max-w-[87.5rem] mx-auto px-8 py-16 w-full">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          
+
           {/* Left Column */}
           <div className="space-y-8">
             <div className="inline-block group cursor-default">
@@ -95,9 +101,9 @@ const HeroSection = () => {
             </div>
 
             <div className="group cursor-default">
-              <h1 className="font-black text-[clamp(3rem,6vw,6rem)] leading-[0.9] text-white uppercase tracking-tight transition-all duration-500 group-hover:drop-shadow-[0_0_30px_rgba(255,77,0,0.3)]">
+              <h1 className="font-black text-[clamp(3.5rem,9vw,6rem)] leading-[0.9] text-white uppercase mb-20 italic tracking-tighter">
                 {personalInfo.name.split(' ')[0]}<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d00] to-[#ffaa00]">
+                <span className="text-transparent pr-2 bg-clip-text bg-gradient-to-r from-[#ff4d00] to-[#ffaa00]">
                   {personalInfo.name.split(' ')[1]}
                 </span>
               </h1>
@@ -108,7 +114,8 @@ const HeroSection = () => {
             </p>
 
             <div className="flex gap-4">
-              <button 
+              <button
+                onClick={() => scrollToProjects()}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="bg-gradient-to-r from-[#ff4d00] to-[#ffaa00] text-white font-black px-10 py-5 rounded-sm transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,77,0,0.6)] active:scale-95"
@@ -119,11 +126,11 @@ const HeroSection = () => {
 
             {/* Social Icons with Glow */}
             <div className="flex gap-5">
-               {[Github, Linkedin, Mail, Phone].map((Icon, i) => (
-                 <div key={i} className="group p-2 rounded-full transition-all duration-300 hover:bg-[#ff4d00]/10 hover:shadow-[0_0_20px_rgba(255,77,0,0.3)]">
-                   <Icon className="text-gray-500 group-hover:text-[#ff4d00] cursor-pointer transition-colors" size={24} />
-                 </div>
-               ))}
+              {[Github, Linkedin, Mail, Phone].map((Icon, i) => (
+                <div key={i} className="group p-2 rounded-full transition-all duration-300 hover:bg-[#ff4d00]/10 hover:shadow-[0_0_20px_rgba(255,77,0,0.3)]">
+                  <Icon className="text-gray-500 group-hover:text-[#ff4d00] cursor-pointer transition-colors" size={24} />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -135,8 +142,8 @@ const HeroSection = () => {
               { label: 'Updates/Sec', val: '1.2k', icon: <Rocket /> },
               { label: 'Experience', val: '1+', icon: <Github /> }
             ].map((s, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 transition-all duration-500 group hover:bg-[#ff4d00]/5 hover:border-[#ff4d00]/60 hover:shadow-[0_0_35px_rgba(255,77,0,0.25)] hover:-translate-y-2"
               >
                 <div className="text-[#ff4d00] mb-4 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(255,77,0,0.8)] transition-all">

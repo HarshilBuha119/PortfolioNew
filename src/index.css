@@ -4,7 +4,8 @@
 
 body {
     margin: 0;
-    background-color: #120a05; /* Matches your Hero background */
+    background-color: #120a05;
+    /* Matches your Hero background */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
         "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -16,20 +17,24 @@ body {
     :root {
         --background: 20 40% 4%;
         --foreground: 0 0% 98%;
-        --primary: 18 100% 50%; /* Brand Orange */
+        --primary: 18 100% 50%;
+        /* Brand Orange */
         --border: 0 0% 14.9%;
-        --radius: 0rem; /* Kept sharp for the edgy feel */
+        --radius: 0rem;
+        /* Kept sharp for the edgy feel */
     }
 }
 
 /* --- HIGH-TECH ANIMATIONS --- */
 
 @layer utilities {
+
     /* The "Shiny" light beam sweep */
     @keyframes shimmer {
         0% {
             transform: translateX(-150%) skewX(-20deg);
         }
+
         100% {
             transform: translateX(150%) skewX(-20deg);
         }
@@ -39,10 +44,36 @@ body {
         animation: shimmer 2.5s infinite ease-in-out;
     }
 
+    /* src/index.css */
+
+    @keyframes border-flow {
+        from {
+            stroke-dashoffset: 400;
+            /* Adjust based on card perimeter */
+        }
+
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    .animate-border-flow {
+        stroke-dasharray: 100 300;
+        /* Length of the light beam vs gap */
+        animation: border-flow 1s linear infinite;
+    }
+
     /* Moving gradient for "Deployments" title */
     @keyframes gradient-x {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+
+        0%,
+        100% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
     }
 
     .animate-gradient-x {
@@ -60,6 +91,7 @@ body {
     * {
         border-color: rgba(255, 255, 255, 0.1);
     }
+
     body {
         @apply text-foreground;
     }

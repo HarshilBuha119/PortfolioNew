@@ -24,7 +24,7 @@ const AboutSection = () => {
   return (
     <section id="about" className="relative z-10 py-24 px-8 bg-transparent">
       <div className="max-w-[87.5rem] mx-auto">
-        
+
         {/* Section Label */}
         <div className="mb-6">
           <span className="text-[#ff9d6e] uppercase text-xs tracking-[0.4em] font-bold px-3 py-1 bg-[#ff4d00]/10 border-l-2 border-[#ff4d00]">
@@ -33,10 +33,10 @@ const AboutSection = () => {
         </div>
 
         {/* Section Title */}
-        <h2 className="font-black text-[clamp(3rem,6vw,5rem)] leading-[0.85] text-white uppercase mb-16">
+        <h2 className="font-black text-[clamp(3.5rem,8vw,6rem)] leading-[0.8] text-white uppercase mb-16 italic tracking-tighter">
           Building The
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d00] to-[#ffaa00]">
+          <span className="text-transparent pr-5 bg-clip-text bg-gradient-to-r from-[#ff4d00] via-[#ffaa00] to-[#ff4d00] animate-gradient-x">
             Future of Mobile
           </span>
         </h2>
@@ -55,7 +55,7 @@ const AboutSection = () => {
           {/* Quick Stats - Styled EXACTLY like Hero Stats */}
           <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-10 group hover:border-[#ff4d00]/40 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,77,0,0.15)]">
             <h3 className="text-white font-black text-xl mb-8 uppercase tracking-widest border-b border-[#ff4d00]/20 pb-2">
-              System Metrics
+              Quick Stats
             </h3>
             <div className="space-y-8">
               {[

@@ -79,7 +79,7 @@ const Footer = () => {
                 href={`tel:${personalInfo.phone}`}
                 className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-xs font-bold"
               >
-                <Phone size={16} className="text-[#ff4d00]" /> SIGNAL
+                <Phone size={16} className="text-[#ff4d00]" /> PHONE
               </a>
             </div>
           </div>
@@ -89,14 +89,14 @@ const Footer = () => {
         <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-6">
             <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest">
-              © {currentYear} Harshil Buha / Terminal_v1.0
+              © {currentYear} Harshil Buha 
             </p>
           </div>
           
           <div className="flex items-center gap-8">
             <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
               Built with <Heart size={12} className="text-[#ff4d00] fill-[#ff4d00]" /> 
-              via <span className="text-white">React & FastAPI</span>
+              by <span className="text-white">Harshil Buha</span>
             </p>
             
             <button 
