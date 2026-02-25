@@ -15,15 +15,21 @@ import { Toaster } from "./components/ui/toaster";
 
 const Home = () => {
   return (
-    <div className="bg-transparent">
+    // Ensure the main container is transparent so we see the 3D Canvas
+    <div className="bg-transparent relative">
       <Header />
+      {/* HeroSection contains the fixed Canvas */}
       <HeroSection />
-      <AboutSection />
-      <ProjectsSection />
-      <SkillsSection />
-      <ExperienceSection />
-      {/* <TestimonialsSection /> */}
-      <ContactSection />
+
+      {/* All these sections scroll OVER the fixed 3D background */}
+      <main className="relative z-10">
+        <AboutSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <ExperienceSection />
+        <ContactSection />
+      </main>
+
       <Footer />
       <Toaster />
     </div>

@@ -34,7 +34,7 @@ const ParticleSystem = ({ scrollPos, isHovered }) => {
 
   useFrame((state) => {
     const positions = pointsRef.current.geometry.attributes.position.array;
-
+    
     // Smoothly transition factor based on scroll
     // scrollPos 0 = Ball, scrollPos 1 = Spread
     const t = THREE.MathUtils.lerp(0, 1, scrollPos);
@@ -46,9 +46,9 @@ const ParticleSystem = ({ scrollPos, isHovered }) => {
       positions[i3 + 1] = THREE.MathUtils.lerp(sphereKernal[i3 + 1], randomField[i3 + 1], t);
       positions[i3 + 2] = THREE.MathUtils.lerp(sphereKernal[i3 + 2], randomField[i3 + 2], t);
     }
-
+    
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
-
+    
     // Rotate the whole group slowly
     pointsRef.current.rotation.y += 0.002;
     pointsRef.current.rotation.x += 0.001;
@@ -83,26 +83,19 @@ const SceneContent = ({ isHovered }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Calculate scroll based on the WHOLE page
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = window.scrollY / totalHeight;
-
-      // 'scrolled' is now a value from 0 (top of page) to 1 (footer)
-      setScrollPos(scrolled);
+      // We normalize the scroll so that the transition happens quickly at the top
+      const scrolled = window.scrollY / (window.innerHeight * 0.8);
+      setScrollPos(Math.min(scrolled, 1)); // Cap at 1
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useFrame((state) => {
-    // Rotation continues to evolve as you scroll through sections
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, scrollPos * Math.PI * 4, 0.05);
-
-    // The dots will now slowly drift further apart as you reach the footer
-    // t=0 (Ball at Hero), t=1 (Total spread at Footer)
-    const t = scrollPos;
-    // ... rest of your lerp logic for positions ...
+    const mouseX = (state.mouse.x * viewport.width) / 15;
+    const mouseY = (state.mouse.y * viewport.height) / 15;
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -mouseY, 0.05);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, mouseX, 0.05);
   });
 
   return (
@@ -110,14 +103,14 @@ const SceneContent = ({ isHovered }) => {
       {/* The Core Wireframe that fades out as dots spread */}
       <mesh scale={1 - scrollPos}>
         <icosahedronGeometry args={[1.5, 2]} />
-        <meshBasicMaterial
-          color="#ff4d00"
-          wireframe
-          transparent
-          opacity={0.3 * (1 - scrollPos)}
+        <meshBasicMaterial 
+          color="#ff4d00" 
+          wireframe 
+          transparent 
+          opacity={0.3 * (1 - scrollPos)} 
         />
       </mesh>
-
+      
       <ParticleSystem scrollPos={scrollPos} isHovered={isHovered} />
     </group>
   );
@@ -179,7 +172,7 @@ const HeroSection = () => {
           <div className="grid grid-cols-2 gap-4">
             {[
               { label: 'Latency Cut', val: '65%', icon: <Zap /> },
-              { label: 'Major Projects', val: '5+', icon: <Code2 /> },
+              { label: 'Major Projects', val: '3+', icon: <Code2 /> },
               { label: 'Updates/Sec', val: '1.2k', icon: <Rocket /> },
               { label: 'Experience', val: '1+', icon: <Github /> }
             ].map((s, i) => (

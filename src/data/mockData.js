@@ -14,6 +14,66 @@ export const personalInfo = {
 
 export const projects = [
   {
+    id: 5,
+    title: "Ashirwad Jewellers",
+    subtitle: "Luxury Jewellery E-Commerce Platform",
+    description:
+      "Engineered a premium dark-editorial jewellery e-commerce app for Ashirwad Jewellers with cinematic animated splash/login flows, live gold & silver price engine, smart product discovery, cart management, multi-method checkout, deep linking, and an admin banner upload system.",
+    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1772018369/Frame_1_3_fjqyqy.png", // 🔁 replace with actual app screenshot
+    techStack: [
+      "React Native",
+      "Firebase Auth",
+      "Supabase",
+      "TanStack Query",
+      "React Navigation",
+      "Notifee",
+      "Linear Gradient",
+      "FastImage",
+    ],
+    highlights: [
+      "Cinematic 7-stage animated splash & letter-by-letter brand reveal on login",
+      "Live metal price engine: rate_per_gm_24k × purity multiplier × 10% duty + 3% GST",
+      "Deep link product sharing with carat, color & width params encoded in URL",
+      "Admin panel: festival banner upload to Supabase Storage with animated progress bar",
+      "Staggered FlatList animations, gold shimmer dividers & spring-physics interactions throughout",
+      "Supabase-backed cart, favourites, orders & real-time jewellery catalog",
+      "Google Sign-In via Firebase Auth with full session persistence",
+      "Custom floating pill tab bar with keyboard-aware hide/show logic",
+    ],
+    metrics: {
+      animation: "7-stage cinematic entrance sequence per screen",
+      pricing: "Live price = rate_per_gm_24k × purity × weight + 13% taxes",
+    },
+    liveLink: "#",
+    githubLink: "https://github.com/HarshilBuha119/Ashirwad-Jewellers",
+  },
+  {
+    id: 4,
+    title: "Porralia - Betting App",
+    subtitle: "Social Pools & Sports Prediction Platform",
+    description:
+      "Built a cross-platform React Native social pools and prediction app where users create contests around sports and TV events, make picks together, and compete using a virtual points system instead of real money.",
+    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771336096/Thumbnail_2_up2ude.png", // You can replace with real app image
+    techStack: [
+      "React Native",
+      "Expo",
+      "Redux Toolkit",
+      "React Query",
+      "REST APIs",
+      "JWT Authentication"
+    ],
+    highlights: [
+      "Designed guided 5-step pool creation flow with validation and structured API payloads",
+      "Implemented monthly 100 virtual points allocation system with balance tracking",
+      "Built flexible reward distribution: Points Split & Podium (1st/2nd/3rd) modes",
+      "Season-long rankings with leaderboard & recurring competitive challenges"
+    ],
+    metrics: {
+      gamification: "100 monthly virtual points per user",
+      flexibility: "Multiple reward distribution modes"
+    },
+  },
+  {
     id: 1,
     title: "ActSafe Emergency Response",
     subtitle: "Emergency Management & Operations Platform",
@@ -73,32 +133,6 @@ export const projects = [
     liveLink: "#",
     githubLink: "#"
   },
-  {
-    id: 4,
-    title: "Porralia - Betting App",
-    subtitle: "Social Pools & Sports Prediction Platform",
-    description:
-      "Built a cross-platform React Native social pools and prediction app where users create contests around sports and TV events, make picks together, and compete using a virtual points system instead of real money.",
-    image: "https://res.cloudinary.com/ds3x2mbi3/image/upload/v1771336096/Thumbnail_2_up2ude.png", // You can replace with real app image
-    techStack: [
-      "React Native",
-      "Expo",
-      "Redux Toolkit",
-      "React Query",
-      "REST APIs",
-      "JWT Authentication"
-    ],
-    highlights: [
-      "Designed guided 5-step pool creation flow with validation and structured API payloads",
-      "Implemented monthly 100 virtual points allocation system with balance tracking",
-      "Built flexible reward distribution: Points Split & Podium (1st/2nd/3rd) modes",
-      "Season-long rankings with leaderboard & recurring competitive challenges"
-    ],
-    metrics: {
-      gamification: "100 monthly virtual points per user",
-      flexibility: "Multiple reward distribution modes"
-    },
-  }
 ];
 
 export const skills = {
